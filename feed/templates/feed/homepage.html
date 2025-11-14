@@ -3,6 +3,8 @@
 {% block title %}Homepage{% endblock title %}
 
 {% block body %}
-<h1>Welcome to the Feed Homepage</h1>
-<p>This is the homepage of the Feed application.</p>
+{% for post in posts %}
+{{ post.text }} written at {{ post.date }}
+<hr>
+{% endfor %}
 {% endblock body %}
