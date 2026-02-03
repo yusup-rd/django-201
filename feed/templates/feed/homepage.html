@@ -1,10 +1,31 @@
-{% extends 'base.html' %}
-
-{% block title %}Homepage{% endblock title %}
-
+{% extends "base.html" %}
+{% block title %}
+    Homepage
+{% endblock title %}
 {% block body %}
-{% for post in posts %}
-{{ post.text }} written at {{ post.date }}
-<hr>
-{% endfor %}
+    {% for post in posts %}
+        <div class="flex items-center justify-center mb-8">
+            <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
+                <div class="flex w-full items-center justify-between border-b pb-3">
+                    {% comment %}
+                    TODO: User needs a link to their bio and profile picture, thumbnail, name etc.
+                    {% endcomment %}
+                    <div class="flex items-center space-x-3">
+                        <div class="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"></div>
+                        <div class="text-lg font-bold text-slate-700">Joe Smith</div>
+                    </div>
+                    <div class="flex items-center space-x-8">
+                        <div class="text-xs text-neutral-500">{{ post.date|date:"F j, Y, g:i a" }}</div>
+                    </div>
+                </div>
+                <div class="mt-4 mb-6">
+                    <div class="text-sm text-neutral-600">{{ post.text }}</div>
+                </div>
+                {% comment %}
+                TODO: Add a detail url  
+                {% endcomment %}
+                <div class="font-semibold text-blue-500 hover:underline cursor-pointer">Read more</div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock body %}
