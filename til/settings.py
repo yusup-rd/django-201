@@ -40,11 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Local apps
     'feed',
     'profiles',
+
+    # Third party apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -138,7 +142,7 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*', 'password2*']
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_LOGOUT_ON_GET = True
