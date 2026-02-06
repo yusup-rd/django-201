@@ -9,7 +9,7 @@
             <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
                 <div class="flex w-full items-center justify-between border-b pb-3">
                     {% comment %}
-                    TODO: User needs a link to their bio and profile picture, thumbnail, name etc.
+                    TODO: Add url to profile details page
                     {% endcomment %}
                     <div class="flex items-center space-x-3 cursor-pointer">
                         {% thumbnail post.author.profile.image "100x100" crop="center" as im %}
@@ -28,10 +28,8 @@
                 <div class="mt-4 mb-6">
                     <div class="text-sm text-neutral-600">{{ post.text }}</div>
                 </div>
-                {% comment %}
-                TODO: Add a detail url  
-                {% endcomment %}
-                <div class="font-semibold text-blue-500 hover:underline cursor-pointer">Read more</div>
+                <a href="{% url 'feed:detail' post.id %}"
+                   class="font-semibold text-blue-500 hover:underline cursor-pointer">Read more</a>
             </div>
         </div>
     {% endfor %}
