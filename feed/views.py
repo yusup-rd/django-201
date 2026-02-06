@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post
 
 
@@ -17,7 +18,7 @@ class PostDetail(DetailView):
     context_object_name = 'post'
 
 
-class CreateNewPost(CreateView):
+class CreateNewPost(LoginRequiredMixin, CreateView):
     http_method_names = ['get', 'post']
     template_name = 'feed/create.html'
     model = Post
