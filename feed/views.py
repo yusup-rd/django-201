@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post
 
 
@@ -15,3 +15,10 @@ class PostDetail(DetailView):
     template_name = 'feed/detail.html'
     model = Post
     context_object_name = 'post'
+
+
+class CreateNewPost(CreateView):
+    http_method_names = ['get', 'post']
+    template_name = 'feed/create.html'
+    model = Post
+    fields = ['text']
