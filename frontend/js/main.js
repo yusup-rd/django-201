@@ -26,3 +26,8 @@ $.ajaxSetup({
     }
   },
 });
+
+$(document).on("click", ".js-toggle-modal", function (e) {
+  e.preventDefault();
+  $(".js-modal").toggleClass("hidden");
+});
