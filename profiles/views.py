@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.views.generic import DetailView
+from feed.models import Post
 
 
 class ProfileDetail(DetailView):
@@ -9,3 +10,11 @@ class ProfileDetail(DetailView):
     context_object_name = 'user'
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+    def get_context_data(self, **kwargs):
+        user = self.get_object()
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        total_posts = Post.objects.filter(author=user).count()
+        context['total_posts'] = total_posts
+        return context
