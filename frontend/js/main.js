@@ -87,3 +87,12 @@ $(document)
       },
     });
   });
+
+// Auto-hide messages after 5 seconds
+$(document).ready(function () {
+  setTimeout(function () {
+    $(".message-toast").fadeOut(500, function () {
+      $(this).remove();
+    });
+  }, 5000);
+});

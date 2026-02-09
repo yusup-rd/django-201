@@ -1,9 +1,12 @@
 from django.contrib.auth.models import User
-from django.views.generic import DetailView, View
+from django.views.generic import DetailView, View, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseBadRequest
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
 from followers.models import Follower
 from feed.models import Post
+from .forms import UserUpdateForm, ProfileUpdateForm, CustomPasswordChangeForm
 
 
 class ProfileDetail(DetailView):
@@ -65,3 +68,83 @@ class FollowView(LoginRequiredMixin, View):
             ).delete()
 
         return JsonResponse({'success': True, 'wording': "Unfollow" if data['action'] == 'follow' else "Follow"})
+
+
+class ProfileEditView(LoginRequiredMixin, View):
+    http_method_names = ['get', 'post']
+    template_name = 'profiles/edit.html'
+
+    def get(self, request, username, *args, **kwargs):
+        user = get_object_or_404(User, username=username)
+
+        # Only allow users to edit their own profile
+        if request.user != user:
+            messages.error(request, "You can only edit your own profile.")
+            return redirect('profiles:detail', username=username)
+
+        user_form = UserUpdateForm(instance=user)
+        profile_form = ProfileUpdateForm(instance=user.profile)
+        password_form = CustomPasswordChangeForm(user=user)
+
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form,
+            'password_form': password_form,
+            'profile_user': user,
+        }
+
+        return self.render_to_response(context)
+
+    def post(self, request, username, *args, **kwargs):
+        user = get_object_or_404(User, username=username)
+
+        # Only allow users to edit their own profile
+        if request.user != user:
+            messages.error(request, "You can only edit your own profile.")
+            return redirect('profiles:detail', username=username)
+
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'profile':
+            user_form = UserUpdateForm(request.POST, instance=user)
+            profile_form = ProfileUpdateForm(
+                request.POST, request.FILES, instance=user.profile)
+
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                messages.success(
+                    request, "Your profile has been updated successfully!")
+                return redirect('profiles:edit', username=user.username)
+            else:
+                password_form = CustomPasswordChangeForm(user=user)
+
+        elif form_type == 'password':
+            password_form = CustomPasswordChangeForm(
+                user=user, data=request.POST)
+
+            if password_form.is_valid():
+                password_form.save()
+                messages.success(
+                    request, "Your password has been changed successfully!")
+                return redirect('profiles:edit', username=username)
+            else:
+                user_form = UserUpdateForm(instance=user)
+                profile_form = ProfileUpdateForm(instance=user.profile)
+        else:
+            user_form = UserUpdateForm(instance=user)
+            profile_form = ProfileUpdateForm(instance=user.profile)
+            password_form = CustomPasswordChangeForm(user=user)
+
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form,
+            'password_form': password_form,
+            'profile_user': user,
+        }
+
+        return self.render_to_response(context)
+
+    def render_to_response(self, context):
+        from django.shortcuts import render
+        return render(self.request, self.template_name, context)

@@ -16,6 +16,11 @@ class Profile(models.Model):
         null=True,
         blank=True,
     )
+    cover_image = ImageField(
+        upload_to='profile_images/covers/',
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return f'Profile for user {self.user.username}'
