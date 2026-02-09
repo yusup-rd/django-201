@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block title %}
+    {{ user.username }}
+{% endblock title %}
+{% block content %}
+    <div class="flex flex-col justify-center items-center">
+        <div class="relative flex flex-col items-center rounded-[20px] w-[400px] mx-auto p-4 bg-white bg-clip-border shadow-3xl border-2 border-gray-200">
+            <div class="relative flex h-32 w-full justify-center rounded-xl">
+                <img src="https://images.unsplash.com/photo-1770150511105-714f4f5c0d3e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                     alt="{{ user.username }}'s profile cover"
+                     height="128"
+                     width="400"
+                     class="h-full w-full object-cover rounded-xl">
+                <div class="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 dark:!border-navy-700">
+                    {% thumbnail user.profile.image "100x100" crop="center" as im %}
+                        <img src="{{ im.url }}"
+                             height="{{ im.height }}"
+                             width="{{ im.width }}"
+                             alt="{{ user.username }}'s profile picture"
+                             class="rounded-full size-full" />
+                    {% endthumbnail %}
+                </div>
+            </div>
+            <div class="mt-16 flex flex-col items-center">
+                <h4 class="text-xl font-bold text-navy-700">{{ user.username }}</h4>
+            </div>
+            <div class="mt-6 mb-3 flex gap-14 md:!gap-14">
+                <div class="flex flex-col items-center justify-center">
+                    {% comment %}
+                        TODO: Add total posts 
+                    {% endcomment %}
+                    <p class="text-2xl font-bold text-navy-700 ">17</p>
+                    <p class="text-sm font-normal text-gray-600">Posts</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    {% comment %}
+                        TODO: Add total followers
+                    {% endcomment %}
+                    <p class="text-2xl font-bold text-navy-700 ">9.7K</p>
+                    <p class="text-sm font-normal text-gray-600">Followers</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    {% comment %}
+                        TODO: Add total following 
+                    {% endcomment %}
+                    <p class="text-2xl font-bold text-navy-700 ">434</p>
+                    <p class="text-sm font-normal text-gray-600">Following</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
