@@ -30,8 +30,14 @@
                                 type="button"
                                 data-username="{{ user.username }}"
                                 data-url="{% url 'profiles:follow' user.username %}"
-                                data-action="follow">
-                            <span class="js-follow-text">Follow</span>
+                                data-action="{% if you_follow %}unfollow{% else %}follow{% endif %}">
+                            <span class="js-follow-text">
+                                {% if you_follow %}
+                                    Unfollow
+                                {% else %}
+                                    Follow
+                                {% endif %}
+                            </span>
                         </button>
                     {% endif %}
                 {% endif %}

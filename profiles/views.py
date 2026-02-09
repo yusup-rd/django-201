@@ -14,12 +14,22 @@ class ProfileDetail(DetailView):
     slug_field = 'username'
     slug_url_kwarg = 'username'
 
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         user = self.get_object()
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         total_posts = Post.objects.filter(author=user).count()
         context['total_posts'] = total_posts
+        if self.request.user.is_authenticated:
+            context['you_follow'] = Follower.objects.filter(
+                followed_by=self.request.user,
+                following=user
+            ).exists()
+
         return context
 
 
