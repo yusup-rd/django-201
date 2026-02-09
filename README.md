@@ -52,6 +52,33 @@ A modern social media platform built with Django where users can share their kno
 - Modal-based post creation
 - Smooth transitions and hover effects
 
+## Screenshots
+
+### Login
+<img width="1918" height="867" alt="login" src="https://github.com/user-attachments/assets/57a7ed08-b30b-4b9b-896e-b572f60f62c2" />
+
+
+### Homepage
+<img width="1897" height="868" alt="homepage" src="https://github.com/user-attachments/assets/f4e3c748-be6e-4eb4-8829-337011731e9c" />
+
+
+### Create Post
+<img width="1915" height="870" alt="create_post" src="https://github.com/user-attachments/assets/a0801a05-0b42-4f07-b933-b275d817ec56" />
+
+
+### My Profile
+<img width="1918" height="862" alt="my_profile" src="https://github.com/user-attachments/assets/f133f5c1-29e1-491f-bd61-563278c867de" />
+
+
+### User Profile
+<img width="1918" height="866" alt="user_profile" src="https://github.com/user-attachments/assets/12bd3c89-e5ba-4a50-a778-0ba6bce3ed69" />
+
+
+### Edit Profile
+<img width="1898" height="862" alt="edit_profile_1" src="https://github.com/user-attachments/assets/b0055a85-a057-4c1b-9635-487a5999d28d" />
+<img width="1897" height="866" alt="edit_profile_2" src="https://github.com/user-attachments/assets/5a755836-3325-4bd5-9bf0-72aca4649177" />
+
+
 ## 🛠️ Tech Stack
 
 ### Backend
