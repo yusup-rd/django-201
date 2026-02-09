@@ -27,7 +27,37 @@ $.ajaxSetup({
   },
 });
 
-$(document).on("click", ".js-toggle-modal", function (e) {
-  e.preventDefault();
-  $(".js-modal").toggleClass("hidden");
-});
+$(document)
+  .on("click", ".js-toggle-modal", function (e) {
+    e.preventDefault();
+    $(".js-modal").toggleClass("hidden");
+    $(".js-post-content").val("");
+  })
+  .on("click", ".js-submit", function (e) {
+    e.preventDefault();
+    const text = $(".js-post-content").val().trim();
+    const $btn = $(this);
+
+    if (!text.length) {
+      return false;
+    }
+
+    $btn.prop("disabled", true).text("Posting!");
+    $.ajax({
+      type: "POST",
+      url: $(".js-post-content").data("post-url"),
+      data: {
+        text: text,
+      },
+      success: (dataHtml) => {
+        $(".js-modal").addClass("hidden");
+        $("#posts-container").prepend(dataHtml);
+        $btn.prop("disabled", false).text("New Post");
+        $(".js-post-content").val("");
+      },
+      error: (error) => {
+        console.warn(error);
+        $btn.prop("disabled", false).text("Error");
+      },
+    });
+  });
